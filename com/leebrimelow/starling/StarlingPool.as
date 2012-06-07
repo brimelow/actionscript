@@ -4,30 +4,35 @@ package com.leebrimelow.starling
 
 	public class StarlingPool
 	{
-		private var pool:Array;
+		public var items:Array;
 		private var counter:int;
 		
 		public function StarlingPool(type:Class, len:int)
 		{
-			pool = new Array();
+			items = new Array();
 			counter = len;
 			
 			var i:int = len;
 			while(--i > -1)
-				pool[i] = new type();
+				items[i] = new type();
 		}
 		
 		public function getSprite():DisplayObject
 		{
 			if(counter > 0)
-				return pool[--counter];
+				return items[--counter];
 			else
 				throw new Error("You exhausted the pool!");
 		}
 		
 		public function returnSprite(s:DisplayObject):void
 		{
-			pool[counter++] = s;
+			items[counter++] = s;
+		}
+		
+		public function destroy():void
+		{
+			items = null;
 		}
 	}
 }
